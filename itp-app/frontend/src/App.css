@@ -40,7 +40,7 @@ body {
 }
 
 /* Main container styling */
-.min-h-screen {
+.aplicatie-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb, #dbeafe);
   background-size: 400% 400%;
@@ -55,18 +55,18 @@ body {
 }
 
 /* Container width adjustments for 1920x1080 */
-.max-w-4xl {
+.aplicatie-continut {
   max-width: 1200px !important; /* Wider for 1920px screens */
   width: 100%;
   margin: 0 auto;
 }
 
 /* Header styling */
-header {
+.aplicatie-header {
   margin-bottom: clamp(2rem, 5vh, 3rem) !important;
 }
 
-header h1 {
+.aplicatie-titlu {
   font-weight: 700;
   color: var(--text-dark);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
@@ -75,26 +75,50 @@ header h1 {
 }
 
 /* Navigation buttons */
-header .flex.space-x-4 {
+.aplicatie-navigare {
+  display: flex;
   gap: 1.5rem;
   flex-wrap: wrap;
 }
 
-header button {
+.buton-navigare {
   transition: var(--transition);
   font-weight: 600;
   box-shadow: var(--shadow-sm);
   padding: 0.875rem 2rem !important;
   font-size: clamp(1rem, 1vw, 1.2rem);
+  border-radius: 0.375rem;
+  cursor: pointer;
+  border: none;
 }
 
-header button:hover {
+.buton-activ {
+  background-color: var(--primary-color);
+  color: var(--white);
+}
+
+.buton-inactiv {
+  background-color: #e5e7eb;
+  color: var(--text-dark);
+}
+
+.buton-navigare:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
+/* Error message */
+.mesaj-eroare {
+  background-color: #fee2e2;
+  border-left: 4px solid #ef4444;
+  color: #b91c1c;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
 /* Card styling */
-.bg-white {
+.formular-container,
+.vizualizare-container {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-lg);
   overflow: hidden;
@@ -107,13 +131,15 @@ header button:hover {
   padding: clamp(2rem, 4vw, 3rem) !important;
 }
 
-.bg-white:hover {
+.formular-container:hover,
+.vizualizare-container:hover {
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
   transform: translateY(-3px);
 }
 
 /* Form section title */
-h2 {
+.formular-titlu,
+.vizualizare-titlu {
   color: var(--text-dark);
   position: relative;
   padding-bottom: 15px;
@@ -122,7 +148,8 @@ h2 {
   font-weight: 700;
 }
 
-h2::after {
+.formular-titlu::after,
+.vizualizare-titlu::after {
   content: "";
   position: absolute;
   bottom: 0;
@@ -134,20 +161,39 @@ h2::after {
 }
 
 /* Grid layout optimization */
-.grid.grid-cols-1.md\:grid-cols-2 {
+.formular-grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
   gap: clamp(1.5rem, 4vh, 2.5rem) !important;
   margin-bottom: 1rem;
 }
 
+@media (min-width: 768px) {
+  .formular-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Form group */
+.formular-grup {
+  display: flex;
+  flex-direction: column;
+}
+
 /* Label styling */
-label {
+.formular-eticheta,
+.filtru-eticheta {
   font-weight: 500;
   color: var(--text-light);
   font-size: 1rem !important;
   margin-bottom: 0.75rem !important;
   display: block !important;
 }
-input, select {
+
+/* Input styling */
+.formular-input,
+.formular-select,
+.filtru-select {
   transition: var(--transition);
   box-shadow: var(--shadow-sm);
   padding: 0.75rem 1rem !important;
@@ -157,25 +203,24 @@ input, select {
   border: 1px solid var(--border-color) !important;
   background-color: var(--white);
   height: 3.5rem !important;
+  color: var(--text-dark);
 }
 
-input:focus, select:focus {
+.formular-input:focus,
+.formular-select:focus,
+.filtru-select:focus {
   border-color: var(--primary-color) !important;
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
   outline: none !important;
 }
 
-label {
-  font-weight: 500;
-  color: var(--text-light);
-  font-size: 0.875rem !important;
-  margin-bottom: 0.5rem !important;
-  display: block !important;
+/* Submit button styling */
+.formular-buton-container {
+  margin-top: 2rem;
 }
 
-/* Submit button styling */
-button[type="submit"], 
-button.w-full {
+.formular-buton-submit,
+.buton-reimprospatare {
   font-weight: 600;
   transition: var(--transition);
   background: linear-gradient(to right, var(--primary-color), var(--primary-dark)) !important;
@@ -183,39 +228,54 @@ button.w-full {
   border: none !important;
   height: 3.5rem !important;
   font-size: 1.1rem !important;
-  margin-top: 2rem !important;
+  color: var(--white);
   border-radius: 8px !important;
+  cursor: pointer;
+  width: 100%;
+  padding: 0 1rem;
 }
 
-button[type="submit"]:hover, 
-button.w-full:hover {
+.buton-reimprospatare {
+  padding: 0.5rem 1rem;
+  height: 2.5rem !important;
+  font-size: 0.9rem !important;
+}
+
+.formular-buton-submit:hover,
+.buton-reimprospatare:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(59, 130, 246, 0.4);
   background: linear-gradient(to right, var(--primary-dark), #1e40af) !important;
 }
 
-button[type="submit"]:active, 
-button.w-full:active {
+.formular-buton-submit:active,
+.buton-reimprospatare:active {
   transform: translateY(1px);
 }
 
+.formular-buton-submit:disabled {
+  background: #93c5fd !important;
+  cursor: not-allowed;
+}
+
 /* Table styling */
-.overflow-x-auto {
+.tabel-container {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
   margin-top: 1.5rem;
+  overflow-x: auto;
 }
 
-table {
+.tabel-programari {
   width: 100% !important; 
   border-collapse: collapse;
 }
 
-thead {
+.tabel-header {
   background: linear-gradient(to right, #f1f5f9, #e2e8f0);
 }
 
-th {
+.tabel-celula-header {
   font-weight: 600;
   color: var(--text-light);
   text-transform: uppercase;
@@ -226,7 +286,7 @@ th {
   white-space: nowrap;
 }
 
-td {
+.tabel-celula {
   padding: 1.25rem 1.5rem !important;
   transition: var(--transition);
   font-size: 1rem !important;
@@ -234,36 +294,53 @@ td {
   border-top: 1px solid var(--border-color);
 }
 
-tr:hover td {
+.tabel-rand:hover .tabel-celula {
   background-color: rgba(241, 245, 249, 0.5);
 }
 
 /* No bookings message */
-.text-center.py-8 {
+.mesaj-incarcare,
+.mesaj-gol {
   font-style: italic;
   color: var(--text-light);
   padding: 3rem 0 !important;
   font-size: 1rem;
+  text-align: center;
 }
 
-/* Filter section */
-.flex.justify-between {
+/* Data view header section */
+.vizualizare-header {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem !important;
   flex-wrap: wrap;
   gap: 1rem;
 }
 
-.flex.justify-between h2 {
+.vizualizare-header .vizualizare-titlu {
   margin-bottom: 0 !important;
   padding-bottom: 0 !important;
 }
 
-.flex.justify-between h2::after {
+.vizualizare-header .vizualizare-titlu::after {
   display: none;
 }
 
-select#filterService {
+.vizualizare-actiuni {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filtru-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filtru-select {
   background-color: #f9fafb;
   border-radius: 6px;
   padding: 0.5rem 1rem !important;
@@ -271,6 +348,23 @@ select#filterService {
   min-width: 180px;
   height: 2.5rem !important;
   font-size: 0.875rem !important;
+}
+
+/* Delete button */
+.buton-stergere {
+  color: #dc2626;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: var(--transition);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+}
+
+.buton-stergere:hover {
+  color: #b91c1c;
+  background-color: #fee2e2;
 }
 
 /* Animations */
@@ -284,40 +378,41 @@ select#filterService {
   to { transform: translateX(0); opacity: 1; }
 }
 
-.bg-white {
+.formular-container,
+.vizualizare-container {
   animation: fadeIn 0.5s ease forwards;
 }
 
-.page-loaded .max-w-4xl {
+.page-loaded .aplicatie-continut {
   animation: slideIn 0.6s ease-out forwards;
 }
 
 /* Staggered animation for form elements */
-.page-loaded label {
+.page-loaded .formular-eticheta {
   animation: fadeIn 0.4s ease forwards;
   animation-delay: 0.1s;
   opacity: 0;
 }
 
-.page-loaded input,
-.page-loaded select {
+.page-loaded .formular-input,
+.page-loaded .formular-select {
   animation: fadeIn 0.4s ease forwards;
   animation-delay: 0.2s;
   opacity: 0;
 }
 
-.page-loaded button {
+.page-loaded .formular-buton-submit {
   animation: fadeIn 0.4s ease forwards;
   animation-delay: 0.3s;
   opacity: 0;
 }
 
 /* Form validation styling */
-input:invalid {
+.formular-input:invalid {
   border-color: #ef4444 !important;
 }
 
-input:invalid:focus {
+.formular-input:invalid:focus {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
 }
 
@@ -347,55 +442,58 @@ input:invalid:focus {
     font-size: 14px; /* Slightly smaller base font size */
   }
   
-  .min-h-screen {
+  .aplicatie-container {
     padding: 1rem 0.75rem;
   }
   
-  .bg-white {
+  .formular-container,
+  .vizualizare-container {
     padding: 1.25rem !important;
     border-radius: 10px;
   }
   
-  header h1 {
+  .aplicatie-titlu {
     font-size: 1.5rem;
   }
   
-  header button {
+  .buton-navigare {
     padding: 0.625rem 1rem !important;
     font-size: 0.875rem;
     flex: 1;
     min-width: 120px;
   }
   
-  header .flex.space-x-4 {
+  .aplicatie-navigare {
     justify-content: center;
   }
   
-  input, select {
+  .formular-input,
+  .formular-select {
     padding: 0.625rem 0.75rem !important;
     height: 2.75rem !important;
   }
   
-  button.w-full {
+  .formular-buton-submit {
     height: 2.75rem !important;
   }
   
-  th, td {
+  .tabel-celula-header,
+  .tabel-celula {
     padding: 0.75rem 0.5rem !important;
     font-size: 0.75rem !important;
   }
   
-  .flex.justify-between {
+  .vizualizare-header {
     flex-direction: column;
     align-items: flex-start;
   }
   
-  select#filterService {
+  .filtru-select {
     width: 100%;
   }
   
   /* Handle iPhone notch */
-  .min-h-screen {
+  .aplicatie-container {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
     padding-left: env(safe-area-inset-left);
@@ -409,22 +507,22 @@ input:invalid:focus {
     font-size: 18px; /* Slightly larger base font size */
   }
   
-  .max-w-4xl {
+  .aplicatie-continut {
     max-width: 1400px !important; /* Even wider for very large screens */
   }
   
-  .grid.grid-cols-1.md\:grid-cols-2 {
+  .formular-grid {
     gap: 2rem !important;
   }
   
-  .min-h-screen {
+  .aplicatie-container {
     padding: 2rem;
   }
 }
 
 /* Safe area insets for iPhone notches and dynamic islands */
 @supports (padding: max(0px)) {
-  .min-h-screen {
+  .aplicatie-container {
     padding-left: max(1rem, env(safe-area-inset-left));
     padding-right: max(1rem, env(safe-area-inset-right));
     padding-top: max(1rem, env(safe-area-inset-top));
@@ -434,18 +532,74 @@ input:invalid:focus {
 
 /* Portrait orientation for mobile devices */
 @media screen and (max-width: 430px) and (orientation: portrait) {
-  .grid.grid-cols-1.md\:grid-cols-2 {
+  .formular-grid {
     grid-template-columns: 1fr !important; /* Force single column */
   }
 }
 
 /* Landscape orientation adjustments */
 @media screen and (max-height: 450px) and (orientation: landscape) {
-  .min-h-screen {
+  .aplicatie-container {
     min-height: 450px;
   }
   
-  .grid.grid-cols-1.md\:grid-cols-2 {
+  .formular-grid {
     grid-template-columns: repeat(2, 1fr) !important; /* Force two columns */
   }
+}
+
+/* SMS notification styling */
+.sms-notificare-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+
+.buton-trimite-sms {
+  background-color: #4a90e2;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.buton-trimite-sms:hover {
+  background-color: #357abD;
+}
+
+.buton-trimite-sms:disabled {
+  background-color: #9cc3f0;
+  cursor: not-allowed;
+}
+
+.sms-status {
+  margin-top: 4px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.sms-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  border: 1px solid #d6e9c6;
+}
+
+.sms-error {
+  background-color: #f2dede;
+  color: #a94442;
+  border: 1px solid #ebccd1;
+}
+
+/* Make table more responsive */
+.tabel-container {
+  overflow-x: auto;
+}
+
+.tabel-programari {
+  min-width: 900px;
 }

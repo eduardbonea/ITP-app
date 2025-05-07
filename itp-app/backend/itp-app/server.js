@@ -42,9 +42,7 @@ const Booking = sequelize.define('Booking', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    validate: {
-      isEmail: true
-    }
+
   },
   date: {
     type: DataTypes.DATEONLY,

@@ -36,14 +36,14 @@ export default function App() {
       const response = await fetch(`${API_URL}/bookings`);
       
       if (!response.ok) {
-        throw new Error('Failed to fetch bookings');
+        throw new Error('Eroare la încărcarea programărilor');
       }
       
       const data = await response.json();
       setSubmissions(data);
     } catch (err) {
-      console.error('Error fetching bookings:', err);
-      setError('Failed to load bookings. Please try again later.');
+      console.error('Eroare la încărcarea programărilor:', err);
+      setError('Eroare la încărcarea programărilor. Vă rugăm să încercați din nou mai târziu.');
     } finally {
       setLoading(false);
     }
@@ -74,7 +74,7 @@ export default function App() {
       
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to submit booking');
+        throw new Error(errorData.message || 'Eroare la trimiterea programării');
       }
       
       // Reset form
@@ -91,8 +91,8 @@ export default function App() {
       setView('data');
       
     } catch (err) {
-      console.error('Error submitting booking:', err);
-      setError(err.message || 'Failed to submit booking. Please try again later.');
+      console.error('Eroare la trimiterea programării:', err);
+      setError(err.message || 'Eroare la trimiterea programării. Vă rugăm să încercați din nou mai târziu.');
     } finally {
       setLoading(false);
     }
@@ -103,41 +103,41 @@ export default function App() {
     : submissions.filter(item => item.service === serviceFilter);
   
   return (
-    <div className="min-h-screen bg-gray-100 p-6">
-      <div className="max-w-4xl mx-auto">
-        <header className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Booking System</h1>
-          <div className="flex space-x-4">
+    <div className="aplicatie-container">
+      <div className="aplicatie-continut">
+        <header className="aplicatie-header">
+          <h1 className="aplicatie-titlu">Sistem de Programări</h1>
+          <div className="aplicatie-navigare">
             <button 
-              className={`px-4 py-2 rounded-md ${view === 'form' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+              className={`buton-navigare ${view === 'form' ? 'buton-activ' : 'buton-inactiv'}`}
               onClick={() => setView('form')}
             >
-              Booking Form
+              Formular Programare
             </button>
             <button 
-              className={`px-4 py-2 rounded-md ${view === 'data' ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-800'}`}
+              className={`buton-navigare ${view === 'data' ? 'buton-activ' : 'buton-inactiv'}`}
               onClick={() => setView('data')}
             >
-              View Bookings
+              Vezi Programări
             </button>
           </div>
         </header>
 
         {error && (
-          <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-4" role="alert">
+          <div className="mesaj-eroare" role="alert">
             <p>{error}</p>
           </div>
         )}
 
         {view === 'form' ? (
-          <BookingForm 
+          <FormularProgramare 
             formData={formData} 
             handleInputChange={handleInputChange} 
             handleSubmit={handleSubmit} 
             loading={loading}
           />
         ) : (
-          <DataView 
+          <VizualizareProgramari 
             submissions={filteredSubmissions} 
             serviceFilter={serviceFilter}
             setServiceFilter={setServiceFilter}
@@ -151,21 +151,21 @@ export default function App() {
 }
 
 // Booking Form Component
-function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
+function FormularProgramare({ formData, handleInputChange, handleSubmit, loading }) {
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit(e);
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-semibold mb-6">New Booking</h2>
+    <div className="formular-container">
+      <h2 className="formular-titlu">Programare Nouă</h2>
       
       <form onSubmit={onSubmit}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-              Name
+        <div className="formular-grid">
+          <div className="formular-grup">
+            <label htmlFor="name" className="formular-eticheta">
+              Nume
             </label>
             <input
               type="text"
@@ -174,13 +174,13 @@ function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
               value={formData.name}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="formular-input"
             />
           </div>
           
-          <div>
-            <label htmlFor="surname" className="block text-sm font-medium text-gray-700 mb-1">
-              Surname
+          <div className="formular-grup">
+            <label htmlFor="surname" className="formular-eticheta">
+              Prenume
             </label>
             <input
               type="text"
@@ -189,13 +189,13 @@ function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
               value={formData.surname}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="formular-input"
             />
           </div>
           
-          <div>
-            <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">
-              Phone Number
+          <div className="formular-grup">
+            <label htmlFor="phone" className="formular-eticheta">
+              Număr de Telefon
             </label>
             <input
               type="tel"
@@ -204,28 +204,27 @@ function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
               value={formData.phone}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="formular-input"
             />
           </div>
           
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-              Email Address
+          <div className="formular-grup">
+            <label htmlFor="email" className="formular-eticheta">
+              Numar de înmatriculare
             </label>
             <input
-              type="email"
+              type="text"
               id="email"
               name="email"
-              value={formData.email}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="formular-input"
             />
           </div>
           
-          <div>
-            <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">
-              Date
+          <div className="formular-grup">
+            <label htmlFor="date" className="formular-eticheta">
+              Data
             </label>
             <input
               type="date"
@@ -234,13 +233,13 @@ function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
               value={formData.date}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="formular-input"
             />
           </div>
           
-          <div>
-            <label htmlFor="service" className="block text-sm font-medium text-gray-700 mb-1">
-              Service Name
+          <div className="formular-grup">
+            <label htmlFor="service" className="formular-eticheta">
+              Stație ITP
             </label>
             <select
               id="service"
@@ -248,21 +247,21 @@ function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
               value={formData.service}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="formular-select"
             >
-              <option value="1">Service 1</option>
-              <option value="2">Service 2</option>
+              <option value="1">Stație ITP 1</option>
+              <option value="2">Stație ITP 2</option>
             </select>
           </div>
         </div>
         
-        <div className="mt-8">
+        <div className="formular-buton-container">
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:bg-blue-300"
+            className="formular-buton-submit"
           >
-            {loading ? 'Submitting...' : 'Submit Booking'}
+            {loading ? 'Se trimite...' : 'Trimite Programarea'}
           </button>
         </div>
       </form>
@@ -271,10 +270,10 @@ function BookingForm({ formData, handleInputChange, handleSubmit, loading }) {
 }
 
 // Data View Component
-function DataView({ submissions, serviceFilter, setServiceFilter, loading, refresh }) {
+function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, loading, refresh }) {
   // Function to delete a booking
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this booking?')) {
+    if (window.confirm('Sunteți sigur că doriți să ștergeți această programare?')) {
       try {
         const response = await fetch(`${API_URL}/bookings/${id}`, {
           method: 'DELETE',
@@ -284,83 +283,83 @@ function DataView({ submissions, serviceFilter, setServiceFilter, loading, refre
           // Refresh the list after deletion
           refresh();
         } else {
-          alert('Failed to delete booking');
+          alert('Eroare la ștergerea programării');
         }
       } catch (error) {
-        console.error('Error deleting booking:', error);
-        alert('An error occurred while deleting the booking');
+        console.error('Eroare la ștergerea programării:', error);
+        alert('A apărut o eroare la ștergerea programării');
       }
     }
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <div className="flex justify-between items-center mb-6">
-        <h2 className="text-2xl font-semibold">Bookings</h2>
+    <div className="vizualizare-container">
+      <div className="vizualizare-header">
+        <h2 className="vizualizare-titlu">Programări</h2>
         
-        <div className="flex items-center space-x-4">
+        <div className="vizualizare-actiuni">
           <button 
             onClick={refresh}
-            className="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300"
+            className="buton-reimprospatare"
           >
-            Refresh
+            Reîmprospătează
           </button>
           
-          <div>
-            <label htmlFor="filterService" className="mr-2 text-sm font-medium text-gray-700">
-              Filter by Service:
+          <div className="filtru-container">
+            <label htmlFor="filterService" className="filtru-eticheta">
+              Filtrează după Stație ITP:
             </label>
             <select
               id="filterService"
               value={serviceFilter}
               onChange={(e) => setServiceFilter(e.target.value)}
-              className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="filtru-select"
             >
-              <option value="all">All Services</option>
-              <option value="1">Service 1</option>
-              <option value="2">Service 2</option>
+              <option value="all">Toate Stațiile ITP</option>
+              <option value="1">Stație ITP 1</option>
+              <option value="2">Stație ITP 2</option>
             </select>
           </div>
         </div>
       </div>
       
       {loading ? (
-        <div className="text-center py-8 text-gray-500">
-          Loading bookings...
+        <div className="mesaj-incarcare">
+          Se încarcă programările...
         </div>
       ) : submissions.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No bookings found. Please submit a booking form.
+        <div className="mesaj-gol">
+          Nu s-au găsit programări. Adaugă una folosind formularul de programare.
         </div>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+        <div className="tabel-container">
+          <table className="tabel-programari">
+            <thead className="tabel-header">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Surname</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Phone</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Service</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="tabel-celula-header">Nume</th>
+                <th className="tabel-celula-header">Prenume</th>
+                <th className="tabel-celula-header">Telefon</th>
+                <th className="tabel-celula-header">Nr de inmatriculare</th>
+                <th className="tabel-celula-header">Data</th>
+                <th className="tabel-celula-header">Stație ITP</th>
+                <th className="tabel-celula-header">Acțiuni</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="tabel-body">
               {submissions.map((submission) => (
-                <tr key={submission.id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{submission.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{submission.surname}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{submission.phone}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{submission.email}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{submission.date}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">Service {submission.service}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                <tr key={submission.id} className="tabel-rand">
+                  <td className="tabel-celula">{submission.name}</td>
+                  <td className="tabel-celula">{submission.surname}</td>
+                  <td className="tabel-celula">{submission.phone}</td>
+                  <td className="tabel-celula">{submission.email}</td>
+                  <td className="tabel-celula">{submission.date}</td>
+                  <td className="tabel-celula">Stație ITP {submission.service}</td>
+                  <td className="tabel-celula">
                     <button
                       onClick={() => handleDelete(submission.id)}
-                      className="text-red-600 hover:text-red-900"
+                      className="buton-stergere"
                     >
-                      Delete
+                      Șterge
                     </button>
                   </td>
                 </tr>
