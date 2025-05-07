@@ -6,19 +6,20 @@ const API_URL = 'http://localhost:3001/api';
 
 // Main App Component
 export default function App() {
-  const [view, setView] = useState('form'); // 'form' or 'data'
+  const [view, setView] = useState('form'); // 'form', 'data', or 'sms'
   const [formData, setFormData] = useState({
     name: '',
     surname: '',
     phone: '',
     email: '',
     date: '',
-    service: '1' // Default value
+    service: 'Valea Dragului' // Default value
   });
   const [submissions, setSubmissions] = useState([]);
   const [serviceFilter, setServiceFilter] = useState('all');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [smsStatus, setSmsStatus] = useState(null);
 
   // Fetch bookings when component mounts or when view changes to 'data'
   useEffect(() => {
@@ -84,7 +85,7 @@ export default function App() {
         phone: '',
         email: '',
         date: '',
-        service: '1'
+        service: 'Valea Dragului'
       });
       
       // Switch to data view after submission
@@ -93,6 +94,83 @@ export default function App() {
     } catch (err) {
       console.error('Eroare la trimiterea programării:', err);
       setError(err.message || 'Eroare la trimiterea programării. Vă rugăm să încercați din nou mai târziu.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to manually trigger SMS sending for today's appointments
+  const triggerSendSMS = async () => {
+    setLoading(true);
+    setSmsStatus(null);
+    
+    try {
+      const response = await fetch(`${API_URL}/send-sms`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error('Eroare la trimiterea SMS-urilor');
+      }
+      
+      const result = await response.json();
+      setSmsStatus({
+        success: true,
+        message: 'SMS-urile au fost trimise cu succes!'
+      });
+      
+    } catch (err) {
+      console.error('Eroare la trimiterea SMS-urilor:', err);
+      setSmsStatus({
+        success: false,
+        message: 'Eroare la trimiterea SMS-urilor. Vă rugăm să încercați din nou.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to send a test SMS to a specific phone number
+  const sendTestSMS = async (phoneNumber) => {
+    if (!phoneNumber) {
+      setSmsStatus({
+        success: false,
+        message: 'Vă rugăm să introduceți un număr de telefon valid.'
+      });
+      return;
+    }
+    
+    setLoading(true);
+    setSmsStatus(null);
+    
+    try {
+      const response = await fetch(`${API_URL}/test-sms`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone: phoneNumber }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Eroare la trimiterea SMS-ului de test');
+      }
+      
+      const result = await response.json();
+      setSmsStatus({
+        success: true,
+        message: 'SMS-ul de test a fost trimis cu succes!'
+      });
+      
+    } catch (err) {
+      console.error('Eroare la trimiterea SMS-ului de test:', err);
+      setSmsStatus({
+        success: false,
+        message: 'Eroare la trimiterea SMS-ului de test. Vă rugăm să încercați din nou.'
+      });
     } finally {
       setLoading(false);
     }
@@ -120,6 +198,12 @@ export default function App() {
             >
               Vezi Programări
             </button>
+            <button 
+              className={`buton-navigare ${view === 'sms' ? 'buton-activ' : 'buton-inactiv'}`}
+              onClick={() => setView('sms')}
+            >
+              Gestionare SMS
+            </button>
           </div>
         </header>
 
@@ -136,13 +220,20 @@ export default function App() {
             handleSubmit={handleSubmit} 
             loading={loading}
           />
-        ) : (
+        ) : view === 'data' ? (
           <VizualizareProgramari 
             submissions={filteredSubmissions} 
             serviceFilter={serviceFilter}
             setServiceFilter={setServiceFilter}
             loading={loading}
             refresh={fetchBookings}
+          />
+        ) : (
+          <SMSManagement
+            triggerSendSMS={triggerSendSMS}
+            sendTestSMS={sendTestSMS}
+            loading={loading}
+            smsStatus={smsStatus}
           />
         )}
       </div>
@@ -216,6 +307,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               type="text"
               id="email"
               name="email"
+              value={formData.email}
               onChange={handleInputChange}
               required
               className="formular-input"
@@ -249,7 +341,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               required
               className="formular-select"
             >
-              <option value="1">Stație ITP 1</option>
+              <option value="Valea Dragului">Valea Dragului</option>
               <option value="2">Stație ITP 2</option>
             </select>
           </div>
@@ -316,7 +408,7 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
               className="filtru-select"
             >
               <option value="all">Toate Stațiile ITP</option>
-              <option value="1">Stație ITP 1</option>
+              <option value="Valea Dragului">Valea Dragului</option>
               <option value="2">Stație ITP 2</option>
             </select>
           </div>
@@ -353,7 +445,7 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
                   <td className="tabel-celula">{submission.phone}</td>
                   <td className="tabel-celula">{submission.email}</td>
                   <td className="tabel-celula">{submission.date}</td>
-                  <td className="tabel-celula">Stație ITP {submission.service}</td>
+                  <td className="tabel-celula"> {/* nume statie programari */} {submission.service}</td>
                   <td className="tabel-celula">
                     <button
                       onClick={() => handleDelete(submission.id)}
@@ -371,3 +463,67 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
     </div>
   );
 }
+
+// SMS Management Component
+function SMSManagement({ triggerSendSMS, sendTestSMS, loading, smsStatus }) {
+  const [testPhone, setTestPhone] = useState('');
+
+  const handleTestSend = (e) => {
+    e.preventDefault();
+    sendTestSMS(testPhone);
+  };
+
+  return (
+    <div className="formular-container">
+      <h2 className="formular-titlu">Gestionare SMS</h2>
+      
+      {smsStatus && (
+        <div className={`mesaj-${smsStatus.success ? 'succes' : 'eroare'}`} role="alert">
+          <p>{smsStatus.message}</p>
+        </div>
+      )}
+      
+      <div className="sms-actiuni">
+        <div className="sms-sectiune">
+          <h3>Trimite SMS-uri pentru Programările de Astăzi</h3>
+          <p>Trimite SMS-uri către toți clienții programați pentru astăzi.</p>
+          <button
+            onClick={triggerSendSMS}
+            disabled={loading}
+            className="formular-buton-submit"
+          >
+            {loading ? 'Se trimite...' : 'Trimite SMS-uri pentru Astăzi'}
+          </button>
+        </div>
+        
+        <div className="sms-sectiune">
+          <h3>Trimite SMS de Test</h3>
+          <form onSubmit={handleTestSend}>
+            <div className="formular-grup">
+              <label htmlFor="testPhone" className="formular-eticheta">
+                Număr de Telefon pentru Test
+              </label>
+              <input
+                type="tel"
+                id="testPhone"
+                value={testPhone}
+                onChange={(e) => setTestPhone(e.target.value)}
+                required
+                className="formular-input"
+                placeholder="Ex: +40712345678"
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="formular-buton-submit"
+            >
+              {loading ? 'Se trimite...' : 'Trimite SMS de Test'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
