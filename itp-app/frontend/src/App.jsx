@@ -198,12 +198,7 @@ export default function App() {
             >
               Vezi Programări
             </button>
-            <button 
-              className={`buton-navigare ${view === 'sms' ? 'buton-activ' : 'buton-inactiv'}`}
-              onClick={() => setView('sms')}
-            >
-              Gestionare SMS
-            </button>
+            
           </div>
         </header>
 
@@ -464,66 +459,4 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
   );
 }
 
-// SMS Management Component
-function SMSManagement({ triggerSendSMS, sendTestSMS, loading, smsStatus }) {
-  const [testPhone, setTestPhone] = useState('');
-
-  const handleTestSend = (e) => {
-    e.preventDefault();
-    sendTestSMS(testPhone);
-  };
-
-  return (
-    <div className="formular-container">
-      <h2 className="formular-titlu">Gestionare SMS</h2>
-      
-      {smsStatus && (
-        <div className={`mesaj-${smsStatus.success ? 'succes' : 'eroare'}`} role="alert">
-          <p>{smsStatus.message}</p>
-        </div>
-      )}
-      
-      <div className="sms-actiuni">
-        <div className="sms-sectiune">
-          <h3>Trimite SMS-uri pentru Programările de Astăzi</h3>
-          <p>Trimite SMS-uri către toți clienții programați pentru astăzi.</p>
-          <button
-            onClick={triggerSendSMS}
-            disabled={loading}
-            className="formular-buton-submit"
-          >
-            {loading ? 'Se trimite...' : 'Trimite SMS-uri pentru Astăzi'}
-          </button>
-        </div>
-        
-        <div className="sms-sectiune">
-          <h3>Trimite SMS de Test</h3>
-          <form onSubmit={handleTestSend}>
-            <div className="formular-grup">
-              <label htmlFor="testPhone" className="formular-eticheta">
-                Număr de Telefon pentru Test
-              </label>
-              <input
-                type="tel"
-                id="testPhone"
-                value={testPhone}
-                onChange={(e) => setTestPhone(e.target.value)}
-                required
-                className="formular-input"
-                placeholder="Ex: +40712345678"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="formular-buton-submit"
-            >
-              {loading ? 'Se trimite...' : 'Trimite SMS de Test'}
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  );
-}
 
