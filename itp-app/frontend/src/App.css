@@ -1,0 +1,451 @@
+/* styles.css - Custom styling for Booking Form Application */
+
+/* Import font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+/* Base styles */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #3b82f6;
+  --primary-dark: #2563eb;
+  --primary-light: #dbeafe;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --white: #ffffff;
+  --background: #f8fafc;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --border-color: rgba(226, 232, 240, 0.8);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+}
+
+html {
+  font-size: 18px; /* Larger base font size for desktop */
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--background);
+  color: var(--text-dark);
+  line-height: 1.5;
+  overflow-x: hidden;
+}
+
+/* Main container styling */
+.min-h-screen {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb, #dbeafe);
+  background-size: 400% 400%;
+  animation: gradientBG 15s ease infinite;
+  padding: clamp(1.5rem, 4vw, 3rem);
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Container width adjustments for 1920x1080 */
+.max-w-4xl {
+  max-width: 1200px !important; /* Wider for 1920px screens */
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Header styling */
+header {
+  margin-bottom: clamp(2rem, 5vh, 3rem) !important;
+}
+
+header h1 {
+  font-weight: 700;
+  color: var(--text-dark);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  font-size: clamp(2rem, 3vw, 3rem);
+  margin-bottom: 1.5rem !important;
+}
+
+/* Navigation buttons */
+header .flex.space-x-4 {
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+header button {
+  transition: var(--transition);
+  font-weight: 600;
+  box-shadow: var(--shadow-sm);
+  padding: 0.875rem 2rem !important;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+}
+
+header button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Card styling */
+.bg-white {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  transition: var(--transition);
+  position: relative;
+  z-index: 1;
+  backdrop-filter: blur(10px);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  padding: clamp(2rem, 4vw, 3rem) !important;
+}
+
+.bg-white:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+}
+
+/* Form section title */
+h2 {
+  color: var(--text-dark);
+  position: relative;
+  padding-bottom: 15px;
+  font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+  margin-bottom: clamp(1.5rem, 5vh, 2.5rem) !important;
+  font-weight: 700;
+}
+
+h2::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+  height: 4px;
+  background: var(--primary-color);
+  border-radius: 2px;
+}
+
+/* Grid layout optimization */
+.grid.grid-cols-1.md\:grid-cols-2 {
+  gap: clamp(1.5rem, 4vh, 2.5rem) !important;
+  margin-bottom: 1rem;
+}
+
+/* Label styling */
+label {
+  font-weight: 500;
+  color: var(--text-light);
+  font-size: 1rem !important;
+  margin-bottom: 0.75rem !important;
+  display: block !important;
+}
+input, select {
+  transition: var(--transition);
+  box-shadow: var(--shadow-sm);
+  padding: 0.75rem 1rem !important;
+  font-size: 1.1rem !important;
+  border-radius: 8px !important;
+  width: 100% !important;
+  border: 1px solid var(--border-color) !important;
+  background-color: var(--white);
+  height: 3.5rem !important;
+}
+
+input:focus, select:focus {
+  border-color: var(--primary-color) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3) !important;
+  outline: none !important;
+}
+
+label {
+  font-weight: 500;
+  color: var(--text-light);
+  font-size: 0.875rem !important;
+  margin-bottom: 0.5rem !important;
+  display: block !important;
+}
+
+/* Submit button styling */
+button[type="submit"], 
+button.w-full {
+  font-weight: 600;
+  transition: var(--transition);
+  background: linear-gradient(to right, var(--primary-color), var(--primary-dark)) !important;
+  box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+  border: none !important;
+  height: 3.5rem !important;
+  font-size: 1.1rem !important;
+  margin-top: 2rem !important;
+  border-radius: 8px !important;
+}
+
+button[type="submit"]:hover, 
+button.w-full:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(59, 130, 246, 0.4);
+  background: linear-gradient(to right, var(--primary-dark), #1e40af) !important;
+}
+
+button[type="submit"]:active, 
+button.w-full:active {
+  transform: translateY(1px);
+}
+
+/* Table styling */
+.overflow-x-auto {
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-top: 1.5rem;
+}
+
+table {
+  width: 100% !important; 
+  border-collapse: collapse;
+}
+
+thead {
+  background: linear-gradient(to right, #f1f5f9, #e2e8f0);
+}
+
+th {
+  font-weight: 600;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1.25rem 1.5rem !important;
+  font-size: 0.9rem !important;
+  text-align: left !important;
+  white-space: nowrap;
+}
+
+td {
+  padding: 1.25rem 1.5rem !important;
+  transition: var(--transition);
+  font-size: 1rem !important;
+  color: var(--text-dark);
+  border-top: 1px solid var(--border-color);
+}
+
+tr:hover td {
+  background-color: rgba(241, 245, 249, 0.5);
+}
+
+/* No bookings message */
+.text-center.py-8 {
+  font-style: italic;
+  color: var(--text-light);
+  padding: 3rem 0 !important;
+  font-size: 1rem;
+}
+
+/* Filter section */
+.flex.justify-between {
+  align-items: center;
+  margin-bottom: 1.5rem !important;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.flex.justify-between h2 {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.flex.justify-between h2::after {
+  display: none;
+}
+
+select#filterService {
+  background-color: #f9fafb;
+  border-radius: 6px;
+  padding: 0.5rem 1rem !important;
+  cursor: pointer;
+  min-width: 180px;
+  height: 2.5rem !important;
+  font-size: 0.875rem !important;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideIn {
+  from { transform: translateX(-10px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.bg-white {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.page-loaded .max-w-4xl {
+  animation: slideIn 0.6s ease-out forwards;
+}
+
+/* Staggered animation for form elements */
+.page-loaded label {
+  animation: fadeIn 0.4s ease forwards;
+  animation-delay: 0.1s;
+  opacity: 0;
+}
+
+.page-loaded input,
+.page-loaded select {
+  animation: fadeIn 0.4s ease forwards;
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.page-loaded button {
+  animation: fadeIn 0.4s ease forwards;
+  animation-delay: 0.3s;
+  opacity: 0;
+}
+
+/* Form validation styling */
+input:invalid {
+  border-color: #ef4444 !important;
+}
+
+input:invalid:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c5c5c5;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a0a0a0;
+}
+
+/* Responsive styles for iPhone 12/13/14 (390px width) */
+@media screen and (max-width: 430px) {
+  html {
+    font-size: 14px; /* Slightly smaller base font size */
+  }
+  
+  .min-h-screen {
+    padding: 1rem 0.75rem;
+  }
+  
+  .bg-white {
+    padding: 1.25rem !important;
+    border-radius: 10px;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+  }
+  
+  header button {
+    padding: 0.625rem 1rem !important;
+    font-size: 0.875rem;
+    flex: 1;
+    min-width: 120px;
+  }
+  
+  header .flex.space-x-4 {
+    justify-content: center;
+  }
+  
+  input, select {
+    padding: 0.625rem 0.75rem !important;
+    height: 2.75rem !important;
+  }
+  
+  button.w-full {
+    height: 2.75rem !important;
+  }
+  
+  th, td {
+    padding: 0.75rem 0.5rem !important;
+    font-size: 0.75rem !important;
+  }
+  
+  .flex.justify-between {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  select#filterService {
+    width: 100%;
+  }
+  
+  /* Handle iPhone notch */
+  .min-h-screen {
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+}
+
+/* Additional optimizations for 1920x1080 screens */
+@media screen and (min-width: 1800px) {
+  html {
+    font-size: 18px; /* Slightly larger base font size */
+  }
+  
+  .max-w-4xl {
+    max-width: 1400px !important; /* Even wider for very large screens */
+  }
+  
+  .grid.grid-cols-1.md\:grid-cols-2 {
+    gap: 2rem !important;
+  }
+  
+  .min-h-screen {
+    padding: 2rem;
+  }
+}
+
+/* Safe area insets for iPhone notches and dynamic islands */
+@supports (padding: max(0px)) {
+  .min-h-screen {
+    padding-left: max(1rem, env(safe-area-inset-left));
+    padding-right: max(1rem, env(safe-area-inset-right));
+    padding-top: max(1rem, env(safe-area-inset-top));
+    padding-bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+/* Portrait orientation for mobile devices */
+@media screen and (max-width: 430px) and (orientation: portrait) {
+  .grid.grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: 1fr !important; /* Force single column */
+  }
+}
+
+/* Landscape orientation adjustments */
+@media screen and (max-height: 450px) and (orientation: landscape) {
+  .min-h-screen {
+    min-height: 450px;
+  }
+  
+  .grid.grid-cols-1.md\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr) !important; /* Force two columns */
+  }
+}
