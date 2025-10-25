@@ -37,73 +37,65 @@ Pentru a rula acest proiect local, vei avea nevoie de [Node.js](https://nodejs.o
 
 ### 1. Configurare Backend (Server)
 
-1.  Clonează repository-ul:
+1.  Clonează repository-ul și navigheaza în folderul 'backend':
     ```bash
     git clone [https://github.com/eduardbonea/ITP.git](https://github.com/eduardbonea/ITP.git)
     cd ITP
     cd backend
     npm install
     ```
-
-2.  Navighează în folderul `backend`:
-    ```bash
-    cd server
-    ```
-
-3.  Instalează dependențele:
-    ```bash
-    npm install
-    ```
-
-4.  Configurează mediul (environment):
-    * Va trebui să creezi un fișier `.env` în folderul `server`.
+ 
+2.  Configurează mediul (environment):
+    * Va trebui să creezi un fișier `.env` în folderul `backend`.
     * Acesta trebuie să conțină variabilele de mediu necesare, în special detaliile de conectare la baza de date pentru Sequelize (exemplu mai jos).
     ```env
-    # Exemplu de .env pentru server (ajustează cu datele tale)
-    DB_USER=nume_utilizator_db
-    DB_PASS=parola_db
-    DB_HOST=localhost
-    DB_NAME=nume_baza_de_date
-    DB_PORT=5432 # (sau 3306 pentru MySQL)
-    DB_DIALECT=postgres # (sau 'mysql')
-    
-    JWT_SECRET=o_cheie_secreta_pentru_token
-    ```
+    # Variabile pentru baza de date
+    DB_NAME='itp-app'
+    DB_USER='root'
+    DB_PASS=''
+    DB_HOST='localhost'
+    DB_PORT=3306
 
-5.  Rulează migrările Sequelize (dacă există) pentru a crea tabelele:
-    ```bash
-    npx sequelize-cli db:migrate
-    ```
+    # Variabila pentru portul serverului
+    PORT=3001
 
-6.  Pornește serverul (în mod 'development', dacă ai configurat `nodemon`):
+    #twilio-api
+    TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    TWILIO_AUTH_TOKEN=your_auth_token_here
+    TWILIO_PHONE_NUMBER=+1234567890
+
+
+3.  Pornim serverul mysql atât din program cât și cu nodemon: 
     ```bash
-    npm run dev
-    ```
-    *Serverul va rula, de obicei, pe `http://localhost:3000` (sau orice port ai setat).*
+    npx nodemon server.js
 
 ### 2. Configurare Frontend (Client)
 
 1.  Deschide un terminal **nou**.
 
-2.  Navighează în folderul `client`:
+2.  Navighează în folderul `frontend`:
     ```bash
     cd ITP/client 
-    # (sau cd ../client dacă ești încă în folderul server)
-    ```
 
 3.  Instalează dependențele:
     ```bash
     npm install
     ```
 
-4.  Pornește serverul de dezvoltare Vite:
+4.  Da un Build aplicației de React:
+    ```bash
+    npm run build
+    ```
+    Apoi porneste aplicația
     ```bash
     npm run dev
     ```
-    *Aplicația React va fi accesibilă la `http://localhost:5173` (sau portul indicat de Vite).*
+    
+    *Aplicația React va fi accesibilă la `http://localhost:3000` (sau portul indicat de Vite).*
 
 ---
 
 ## 👨‍💻 Autor
 
 * **Eduard Bonea** - [GitHub](https://github.com/eduardbonea)
+                   - [Website](http://http://159.223.23.236:80)
