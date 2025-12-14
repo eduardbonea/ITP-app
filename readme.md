@@ -50,8 +50,8 @@ Pentru a rula acest proiect local, vei avea nevoie de [Node.js](https://nodejs.o
     * Acesta trebuie să conțină variabilele de mediu necesare, în special detaliile de conectare la baza de date pentru Sequelize (exemplu mai jos).
     ```env
     # Variabile pentru baza de date
-    DB_NAME='itp-app'
-    DB_USER='root'
+    MYSQL_DATABASE='itp-app'
+    MYSQL_USER='root'
     DB_PASS=''
     DB_HOST='localhost'
     DB_PORT=3306
@@ -98,4 +98,4 @@ Pentru a rula acest proiect local, vei avea nevoie de [Node.js](https://nodejs.o
 ## 👨‍💻 Autor
 
 * **Eduard Bonea** - [GitHub](https://github.com/eduardbonea)
-                   - [Website](http://http://159.223.23.236:80)
+                   - [Website](http://http://eduardbonea.com)

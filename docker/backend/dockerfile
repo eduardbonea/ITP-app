@@ -1,0 +1,13 @@
+FROM node:lts-alpine
+
+WORKDIR /var/www/html/ITP-app
+
+COPY ./backend/package*.json ./
+
+RUN npm i 
+
+COPY ./backend/. .
+
+EXPOSE 3004
+
+CMD ["npm", "run", "dev"]

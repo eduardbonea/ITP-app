@@ -15,9 +15,9 @@ const client = twilio(accountSid, authToken);
 
 // Database Configuration (using the same config as your main app)
 const sequelize = new Sequelize(
-  process.env.DB_NAME, 
-  process.env.DB_USER, 
-  process.env.DB_PASSWORD, 
+  process.env.MYSQL_DATABASE, 
+  process.env.MYSQL_USER, 
+  process.env.MYSQL_PASSWORD, 
   {
     host: process.env.DB_HOST,
     dialect: 'mysql',

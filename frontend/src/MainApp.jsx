@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './app.css';
+import './App.css';
 
 // API base URL - change if your Express server runs on a different port
 const API_URL = 'http://localhost:3001/api';
