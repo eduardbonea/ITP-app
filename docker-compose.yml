@@ -1,7 +1,7 @@
 services:
   database:
     image: mysql:8.0
-    container_name: db
+    container_name: itp_db
     restart: always
     ports:
       - "3306:3306"
@@ -14,7 +14,7 @@ services:
     build:
       context: .
       dockerfile: docker/backend/dockerfile
-    container_name: backend
+    container_name: itp_backend
     restart: always
     ports:
       - "3001:3001"
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: docker/frontend/dockerfile
-    container_name: frontend
+    container_name: itp_frontend
     restart: always
     ports:
       - "80:80"

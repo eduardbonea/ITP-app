@@ -1,6 +1,6 @@
 FROM node:lts-alpine
 
-WORKDIR /var/www/html/ITP-app
+WORKDIR /docker/app
 
 COPY ./backend/package*.json ./
 

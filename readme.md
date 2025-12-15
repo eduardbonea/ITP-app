@@ -31,71 +31,81 @@ Proiectul este construit folosind următoarele tehnologii:
 * **Vizualizarea bazei de date**: Pentru comoditatea am adăugat și o pagină de register, dar aplicația poate fi accesată DOAR dacă utilizatorul are ADMIN din baza de date prin o valoare boolean
 ---
 
-## 🚀 Instalare și Rulare Locală
+## 🚀 Instalare și Rulare
 
-Pentru a rula acest proiect local, vei avea nevoie de [Node.js](https://nodejs.org/en/) instalat dar și de un client pentru baze de date, recomandat [Laragon](https://github.com/leokhoa/laragon/releases)
+Utilizarea Docker este cea mai simplă și rapidă metodă, eliminând cerințele de instalare Node.js, MySQL sau FFmpeg direct pe sistemul personal
 
-### 1. Configurare Backend (Server)
+### 0. Precondiții Esențiale
 
-1.  Clonează repository-ul și navigheaza în folderul 'backend':
-    ```bash
-    git clone [https://github.com/eduardbonea/ITP.git](https://github.com/eduardbonea/ITP.git)
-    cd ITP
-    cd backend
-    npm install
-    ```
- 
-2.  Configurează mediul (environment):
-    * Va trebui să creezi un fișier `.env` în folderul `backend`.
-    * Acesta trebuie să conțină variabilele de mediu necesare, în special detaliile de conectare la baza de date pentru Sequelize (exemplu mai jos).
-    ```env
-    # Variabile pentru baza de date
-    MYSQL_DATABASE='itp-app'
-    MYSQL_USER='root'
-    DB_PASS=''
-    DB_HOST='localhost'
-    DB_PORT=3306
+* **[Docker Desktop](https://www.docker.com/products/docker-desktop)** 
 
-    # Variabila pentru portul serverului
-    PORT=3001
+### 1. Clonarea Proiectului
 
-    #twilio-api
-    TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    TWILIO_AUTH_TOKEN=your_auth_token_here
-    TWILIO_PHONE_NUMBER=+1234567890
+Deschide terminalul și clonează repository-ul:
 
+```bash
+git clone [https://github.com/eduardbonea/ITP-app.git](https://github.com/eduardbonea/ITP-app.git)
+cd cctv-app
+````
 
-3.  Pornim serverul mysql atât din program cât și cu nodemon: 
-    ```bash
-    npx nodemon server.js
+### 2\. Configurare Variabile de Mediu
 
-### 2. Configurare Frontend (Client)
+Variabilele sunt definite în `docker-compose.yml` ca să fie importate din `.env`, este nevoie să creați un fișier `.env` în directorul `backend/` cu următoarea structură:
 
-1.  Deschide un terminal **nou**.
+```bash
+DB_PORT=3306
 
-2.  Navighează în folderul `frontend`:
-    ```bash
-    cd ITP/client 
+# Twilio Credentials
+TWILIO_ACCOUNT_SID= 
+TWILIO_AUTH_TOKEN=
+TWILIO_PHONE_NUMBER=
 
-3.  Instalează dependențele:
-    ```bash
-    npm install
-    ```
+#DOCKER
+MYSQL_ROOT_PASSWORD=
 
-4.  Da un Build aplicației de React:
-    ```bash
-    npm run build
-    ```
-    Apoi porneste aplicația
-    ```bash
-    npm run dev
-    ```
-    
-    *Aplicația React va fi accesibilă la `http://localhost:3000` (sau portul indicat de Vite).*
+# Database Configuration
+MYSQL_DATABASE=
+MYSQL_USER=
+MYSQL_PASSWORD=
+DB_HOST=database
+```
 
----
+### 3\. Pornirea Aplicației (Build & Run)
+
+Execută această comandă pentru a construi imaginile Docker necesare și a porni toate serviciile (backend, frontend, bază de date) în fundal:
+
+```bash
+docker-compose up --build -d
+```
+
+### 4\. Accesarea Aplicației
+
+După ce containerele au pornit cu succes:
+
+| Serviciu | Adresă Implicită |
+| :--- | :--- |
+| **Frontend (Aplicația Web)** | `http://localhost:80` |
+| **Backend (API)** | `http://localhost:3004` |
+| **Database (mysql)** | `http://localhost:3306` |
+
+### 5\. Oprirea și Curățarea
+
+Pentru a opri și șterge containerele fără a pierde datele stocate în volume:
+
+```bash
+docker-compose down
+```
+
+Pentru a șterge complet toate containerele, imaginile și **volumele de date (inclusiv datele MySQL stocate)**:
+
+```bash
+docker-compose down --rmi all -v
+```
+
+-----
 
 ## 👨‍💻 Autor
 
-* **Eduard Bonea** - [GitHub](https://github.com/eduardbonea)
-                   - [Website](http://http://eduardbonea.com)
+  * **Eduard Bonea**
+      * [GitHub](https://github.com/eduardbonea)
+      * [Website](https://eduardbonea.com)
