@@ -2,7 +2,7 @@ import { useState } from 'react';
 import './SignUpPage.css'; // We will create this
 
 // API base URL
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'http://localhost:3001/api/users';
 
 export default function SignUpPage({ onSignUpSuccess, onNavigateToLogin }) {
   const [email, setEmail] = useState('');

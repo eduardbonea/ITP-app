@@ -1,5 +1,9 @@
-module.exports = (sequelize, DataTypes) => {
-  const Booking = sequelize.define('Booking', {
+const db = require('../config/db');
+const { DataTypes } = require('sequelize');
+
+const booking = db.define(
+  'bookings',
+  {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
@@ -19,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: false
     },
     date: {
       type: DataTypes.DATEONLY,
@@ -29,10 +33,11 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false
     }
-  }, {
-    tableName: 'bookings',
+  },
+  {
+    freezeTableName: true,
     timestamps: true
-  });
+  }
+);
 
-  return Booking;
-};
+module.exports = booking;
