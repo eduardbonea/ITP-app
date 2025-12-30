@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import './LoginPage.css'; 
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = 'http://localhost:3001/api/users';
 
 // Accept new props: onNavigateToSignUp and successMessage
 export default function LoginPage({ onLoginSuccess, onNavigateToSignUp, successMessage }) {
