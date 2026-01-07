@@ -1,12 +1,10 @@
-/* src/LoginPage.css */
-
 .login-page-container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-color: #f3f4f6;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .login-form-container {
@@ -60,7 +58,7 @@
   border: 1px solid #cbd5e1;
   background-color: #f8fafc;
   color: #1e293b;
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  box-sizing: border-box;
   transition: all 0.3s ease;
 }
 
@@ -122,9 +120,9 @@
 }
 
 .login-success-message {
-  background-color: #dcfce7; /* Green background */
+  background-color: #dcfce7;
   border: 1px solid #4ade80;
-  color: #15803d; /* Dark green text */
+  color: #15803d;
   padding: 1rem;
   border-radius: 8px;
   text-align: center;

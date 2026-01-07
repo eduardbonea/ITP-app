@@ -1,13 +1,10 @@
-/* src/SignUpPage.css */
-
-/* This is mostly a copy of LoginPage.css */
 .signup-page-container {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 100vh;
   background-color: #f3f4f6;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
 }
 
 .signup-form-container {
@@ -38,7 +35,7 @@
 .signup-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* Slightly smaller gap for 3 fields */
+  gap: 1.25rem;
 }
 
 .signup-form-group {
@@ -75,7 +72,7 @@
 .signup-button {
   font-weight: 600;
   transition: all 0.3s ease;
-  background: linear-gradient(to right, #10b981, #059669); /* Green for sign up */
+  background: linear-gradient(to right, #10b981, #059669);
   box-shadow: 0 4px 6px rgba(16, 185, 129, 0.3);
   border: none;
   height: 3rem;

@@ -1,9 +1,5 @@
-/* styles.css - Custom styling for Booking Form Application */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 
-/* Import font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-/* Base styles */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -28,18 +24,17 @@
 }
 
 html {
-  font-size: 18px; /* Larger base font size for desktop */
+  font-size: 18px;
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   background-color: var(--background);
   color: var(--text-dark);
   line-height: 1.5;
   overflow-x: hidden;
 }
 
-/* Main container styling */
 .aplicatie-container {
   min-height: 100vh;
   background: linear-gradient(135deg, #f3f4f6, #e5e7eb, #dbeafe);
@@ -49,19 +44,23 @@ body {
 }
 
 @keyframes gradientBG {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-/* Container width adjustments for 1920x1080 */
 .aplicatie-continut {
-  max-width: 1200px !important; /* Wider for 1920px screens */
+  max-width: 1200px !important;
   width: 100%;
   margin: 0 auto;
 }
 
-/* Header styling */
 .aplicatie-header {
   margin-bottom: clamp(2rem, 5vh, 3rem) !important;
 }
@@ -74,7 +73,6 @@ body {
   margin-bottom: 1.5rem !important;
 }
 
-/* Navigation buttons */
 .aplicatie-navigare {
   display: flex;
   gap: 1.5rem;
@@ -107,7 +105,6 @@ body {
   box-shadow: var(--shadow-md);
 }
 
-/* Error message */
 .mesaj-eroare {
   background-color: #fee2e2;
   border-left: 4px solid #ef4444;
@@ -116,7 +113,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* Card styling */
 .formular-container,
 .vizualizare-container {
   border-radius: var(--border-radius);
@@ -137,7 +133,6 @@ body {
   transform: translateY(-3px);
 }
 
-/* Form section title */
 .formular-titlu,
 .vizualizare-titlu {
   color: var(--text-dark);
@@ -160,7 +155,6 @@ body {
   border-radius: 2px;
 }
 
-/* Grid layout optimization */
 .formular-grid {
   display: grid;
   grid-template-columns: repeat(1, 1fr);
@@ -174,13 +168,11 @@ body {
   }
 }
 
-/* Form group */
 .formular-grup {
   display: flex;
   flex-direction: column;
 }
 
-/* Label styling */
 .formular-eticheta,
 .filtru-eticheta {
   font-weight: 500;
@@ -190,7 +182,6 @@ body {
   display: block !important;
 }
 
-/* Input styling */
 .formular-input,
 .formular-select,
 .filtru-select {
@@ -214,7 +205,6 @@ body {
   outline: none !important;
 }
 
-/* Submit button styling */
 .formular-buton-container {
   margin-top: 2rem;
 }
@@ -223,7 +213,11 @@ body {
 .buton-reimprospatare {
   font-weight: 600;
   transition: var(--transition);
-  background: linear-gradient(to right, var(--primary-color), var(--primary-dark)) !important;
+  background: linear-gradient(
+    to right,
+    var(--primary-color),
+    var(--primary-dark)
+  ) !important;
   box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
   border: none !important;
   height: 3.5rem !important;
@@ -245,7 +239,11 @@ body {
 .buton-reimprospatare:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(59, 130, 246, 0.4);
-  background: linear-gradient(to right, var(--primary-dark), #1e40af) !important;
+  background: linear-gradient(
+    to right,
+    var(--primary-dark),
+    #1e40af
+  ) !important;
 }
 
 .formular-buton-submit:active,
@@ -258,7 +256,6 @@ body {
   cursor: not-allowed;
 }
 
-/* Table styling */
 .tabel-container {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow-sm);
@@ -267,7 +264,7 @@ body {
 }
 
 .tabel-programari {
-  width: 100% !important; 
+  width: 100% !important;
   border-collapse: collapse;
 }
 
@@ -298,7 +295,6 @@ body {
   background-color: rgba(241, 245, 249, 0.5);
 }
 
-/* No bookings message */
 .mesaj-incarcare,
 .mesaj-gol {
   font-style: italic;
@@ -308,7 +304,6 @@ body {
   text-align: center;
 }
 
-/* Data view header section */
 .vizualizare-header {
   display: flex;
   justify-content: space-between;
@@ -350,7 +345,6 @@ body {
   font-size: 0.875rem !important;
 }
 
-/* Delete button */
 .buton-stergere {
   color: #dc2626;
   background: none;
@@ -367,15 +361,26 @@ body {
   background-color: #fee2e2;
 }
 
-/* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes slideIn {
-  from { transform: translateX(-10px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 .formular-container,
@@ -387,7 +392,6 @@ body {
   animation: slideIn 0.6s ease-out forwards;
 }
 
-/* Staggered animation for form elements */
 .page-loaded .formular-eticheta {
   animation: fadeIn 0.4s ease forwards;
   animation-delay: 0.1s;
@@ -407,7 +411,6 @@ body {
   opacity: 0;
 }
 
-/* Form validation styling */
 .formular-input:invalid {
   border-color: #ef4444 !important;
 }
@@ -416,7 +419,6 @@ body {
   box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3) !important;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -436,63 +438,61 @@ body {
   background: #a0a0a0;
 }
 
-/* Responsive styles for iPhone 12/13/14 (390px width) */
 @media screen and (max-width: 430px) {
   html {
-    font-size: 14px; /* Slightly smaller base font size */
+    font-size: 14px;
   }
-  
+
   .aplicatie-container {
     padding: 1rem 0.75rem;
   }
-  
+
   .formular-container,
   .vizualizare-container {
     padding: 1.25rem !important;
     border-radius: 10px;
   }
-  
+
   .aplicatie-titlu {
     font-size: 1.5rem;
   }
-  
+
   .buton-navigare {
     padding: 0.625rem 1rem !important;
     font-size: 0.875rem;
     flex: 1;
     min-width: 120px;
   }
-  
+
   .aplicatie-navigare {
     justify-content: center;
   }
-  
+
   .formular-input,
   .formular-select {
     padding: 0.625rem 0.75rem !important;
     height: 2.75rem !important;
   }
-  
+
   .formular-buton-submit {
     height: 2.75rem !important;
   }
-  
+
   .tabel-celula-header,
   .tabel-celula {
     padding: 0.75rem 0.5rem !important;
     font-size: 0.75rem !important;
   }
-  
+
   .vizualizare-header {
     flex-direction: column;
     align-items: flex-start;
   }
-  
+
   .filtru-select {
     width: 100%;
   }
-  
-  /* Handle iPhone notch */
+
   .aplicatie-container {
     padding-top: env(safe-area-inset-top);
     padding-bottom: env(safe-area-inset-bottom);
@@ -501,26 +501,24 @@ body {
   }
 }
 
-/* Additional optimizations for 1920x1080 screens */
 @media screen and (min-width: 1800px) {
   html {
-    font-size: 18px; /* Slightly larger base font size */
+    font-size: 18px;
   }
-  
+
   .aplicatie-continut {
-    max-width: 1400px !important; /* Even wider for very large screens */
+    max-width: 1400px !important;
   }
-  
+
   .formular-grid {
     gap: 2rem !important;
   }
-  
+
   .aplicatie-container {
     padding: 2rem;
   }
 }
 
-/* Safe area insets for iPhone notches and dynamic islands */
 @supports (padding: max(0px)) {
   .aplicatie-container {
     padding-left: max(1rem, env(safe-area-inset-left));
@@ -530,20 +528,18 @@ body {
   }
 }
 
-/* Portrait orientation for mobile devices */
 @media screen and (max-width: 430px) and (orientation: portrait) {
   .formular-grid {
-    grid-template-columns: 1fr !important; /* Force single column */
+    grid-template-columns: 1fr !important;
   }
 }
 
-/* Landscape orientation adjustments */
 @media screen and (max-height: 450px) and (orientation: landscape) {
   .aplicatie-container {
     min-height: 450px;
   }
-  
+
   .formular-grid {
-    grid-template-columns: repeat(2, 1fr) !important; /* Force two columns */
+    grid-template-columns: repeat(2, 1fr) !important;
   }
 }

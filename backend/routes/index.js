@@ -4,7 +4,7 @@ const router = express.Router();
 const booking = require('./booking');
 const user = require('./user');
 
-router.use('/bookings', booking);
-router.use('/users', user);
+router.use('/booking', booking);
+router.use('/user', user);
 
 module.exports = router;

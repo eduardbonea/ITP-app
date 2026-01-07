@@ -1,50 +1,48 @@
-import { useState, useEffect } from 'react';
-import './App.css';
+import { useState, useEffect } from "react";
+import "./App.css";
 
-// API base URL - change if your Express server runs on a different port
-const API_URL = 'http://localhost:3001/api';
+export const API_URL = "http://localhost:3001/api";
 
-// Main App Component
 export default function MainApp() {
-  const [view, setView] = useState('form'); // 'form', 'data', or 'sms'
+  const [view, setView] = useState("form");
   const [formData, setFormData] = useState({
-    name: '',
-    surname: '',
-    phone: '',
-    email: '',
-    date: '',
-    service: 'Valea Dragului' // Default value
+    name: "",
+    surname: "",
+    phone: "",
+    email: "",
+    date: "",
+    service: "Valea Dragului",
   });
   const [submissions, setSubmissions] = useState([]);
-  const [serviceFilter, setServiceFilter] = useState('all');
+  const [serviceFilter, setServiceFilter] = useState("all");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [smsStatus, setSmsStatus] = useState(null);
 
-  // Fetch bookings when component mounts or when view changes to 'data'
   useEffect(() => {
-    if (view === 'data') {
-      fetchBookings();
+    if (view === "data") {
+      fetchbooking();
     }
   }, [view]);
 
-  // Fetch all bookings from the backend
-  const fetchBookings = async () => {
+  const fetchbooking = async () => {
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await fetch(`${API_URL}/bookings`);
-      
+      const response = await fetch(`${API_URL}/booking`);
+
       if (!response.ok) {
-        throw new Error('Eroare la încărcarea programărilor');
+        throw new Error("Eroare la încărcarea programărilor");
       }
-      
+
       const data = await response.json();
       setSubmissions(data);
     } catch (err) {
-      console.error('Eroare la încărcarea programărilor:', err);
-      setError('Eroare la încărcarea programărilor. Vă rugăm să încercați din nou mai târziu.');
+      console.error("Eroare la încărcarea programărilor:", err);
+      setError(
+        "Eroare la încărcarea programărilor. Vă rugăm să încercați din nou mai târziu."
+      );
     } finally {
       setLoading(false);
     }
@@ -54,151 +52,155 @@ export default function MainApp() {
     const { name, value } = e.target;
     setFormData({
       ...formData,
-      [name]: value
+      [name]: value,
     });
   };
 
   const handleSubmit = async (e) => {
     if (e) e.preventDefault();
-    
+
     setLoading(true);
     setError(null);
-    
+
     try {
-      const response = await fetch(`${API_URL}/bookings`, {
-        method: 'POST',
+      const response = await fetch(`${API_URL}/booking`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Eroare la trimiterea programării');
+        throw new Error(
+          errorData.message || "Eroare la trimiterea programării"
+        );
       }
-      
-      // Reset form
+
       setFormData({
-        name: '',
-        surname: '',
-        phone: '',
-        email: '',
-        date: '',
-        service: 'Valea Dragului'
+        name: "",
+        surname: "",
+        phone: "",
+        email: "",
+        date: "",
+        service: "Valea Dragului",
       });
-      
-      // Switch to data view after submission
-      setView('data');
-      
+
+      setView("data");
     } catch (err) {
-      console.error('Eroare la trimiterea programării:', err);
-      setError(err.message || 'Eroare la trimiterea programării. Vă rugăm să încercați din nou mai târziu.');
+      console.error("Eroare la trimiterea programării:", err);
+      setError(
+        err.message ||
+          "Eroare la trimiterea programării. Vă rugăm să încercați din nou mai târziu."
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  // Function to manually trigger SMS sending for today's appointments
   const triggerSendSMS = async () => {
     setLoading(true);
     setSmsStatus(null);
-    
+
     try {
       const response = await fetch(`${API_URL}/send-sms`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-        }
+          "Content-Type": "application/json",
+        },
       });
-      
+
       if (!response.ok) {
-        throw new Error('Eroare la trimiterea SMS-urilor');
+        throw new Error("Eroare la trimiterea SMS-urilor");
       }
-      
+
       const result = await response.json();
       setSmsStatus({
         success: true,
-        message: 'SMS-urile au fost trimise cu succes!'
+        message: "SMS-urile au fost trimise cu succes!",
       });
-      
     } catch (err) {
-      console.error('Eroare la trimiterea SMS-urilor:', err);
+      console.error("Eroare la trimiterea SMS-urilor:", err);
       setSmsStatus({
         success: false,
-        message: 'Eroare la trimiterea SMS-urilor. Vă rugăm să încercați din nou.'
+        message:
+          "Eroare la trimiterea SMS-urilor. Vă rugăm să încercați din nou.",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  // Function to send a test SMS to a specific phone number
   const sendTestSMS = async (phoneNumber) => {
     if (!phoneNumber) {
       setSmsStatus({
         success: false,
-        message: 'Vă rugăm să introduceți un număr de telefon valid.'
+        message: "Vă rugăm să introduceți un număr de telefon valid.",
       });
       return;
     }
-    
+
     setLoading(true);
     setSmsStatus(null);
-    
+
     try {
       const response = await fetch(`${API_URL}/test-sms`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ phone: phoneNumber }),
       });
-      
+
       if (!response.ok) {
-        throw new Error('Eroare la trimiterea SMS-ului de test');
+        throw new Error("Eroare la trimiterea SMS-ului de test");
       }
-      
+
       const result = await response.json();
       setSmsStatus({
         success: true,
-        message: 'SMS-ul de test a fost trimis cu succes!'
+        message: "SMS-ul de test a fost trimis cu succes!",
       });
-      
     } catch (err) {
-      console.error('Eroare la trimiterea SMS-ului de test:', err);
+      console.error("Eroare la trimiterea SMS-ului de test:", err);
       setSmsStatus({
         success: false,
-        message: 'Eroare la trimiterea SMS-ului de test. Vă rugăm să încercați din nou.'
+        message:
+          "Eroare la trimiterea SMS-ului de test. Vă rugăm să încercați din nou.",
       });
     } finally {
       setLoading(false);
     }
   };
 
-  const filteredSubmissions = serviceFilter === 'all' 
-    ? submissions 
-    : submissions.filter(item => item.service === serviceFilter);
-  
+  const filteredSubmissions =
+    serviceFilter === "all"
+      ? submissions
+      : submissions.filter((item) => item.service === serviceFilter);
+
   return (
     <div className="aplicatie-container">
       <div className="aplicatie-continut">
         <header className="aplicatie-header">
           <h1 className="aplicatie-titlu">Sistem de Programări</h1>
           <div className="aplicatie-navigare">
-            <button 
-              className={`buton-navigare ${view === 'form' ? 'buton-activ' : 'buton-inactiv'}`}
-              onClick={() => setView('form')}
+            <button
+              className={`buton-navigare ${
+                view === "form" ? "buton-activ" : "buton-inactiv"
+              }`}
+              onClick={() => setView("form")}
             >
               Formular Programare
             </button>
-            <button 
-              className={`buton-navigare ${view === 'data' ? 'buton-activ' : 'buton-inactiv'}`}
-              onClick={() => setView('data')}
+            <button
+              className={`buton-navigare ${
+                view === "data" ? "buton-activ" : "buton-inactiv"
+              }`}
+              onClick={() => setView("data")}
             >
               Vezi Programări
             </button>
-            
           </div>
         </header>
 
@@ -208,20 +210,20 @@ export default function MainApp() {
           </div>
         )}
 
-        {view === 'form' ? (
-          <FormularProgramare 
-            formData={formData} 
-            handleInputChange={handleInputChange} 
-            handleSubmit={handleSubmit} 
+        {view === "form" ? (
+          <FormularProgramare
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSubmit={handleSubmit}
             loading={loading}
           />
-        ) : view === 'data' ? (
-          <VizualizareProgramari 
-            submissions={filteredSubmissions} 
+        ) : view === "data" ? (
+          <VizualizareProgramari
+            submissions={filteredSubmissions}
             serviceFilter={serviceFilter}
             setServiceFilter={setServiceFilter}
             loading={loading}
-            refresh={fetchBookings}
+            refresh={fetchbooking}
           />
         ) : (
           <SMSManagement
@@ -236,8 +238,12 @@ export default function MainApp() {
   );
 }
 
-// Booking Form Component
-function FormularProgramare({ formData, handleInputChange, handleSubmit, loading }) {
+function FormularProgramare({
+  formData,
+  handleInputChange,
+  handleSubmit,
+  loading,
+}) {
   const onSubmit = (e) => {
     e.preventDefault();
     handleSubmit(e);
@@ -246,7 +252,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
   return (
     <div className="formular-container">
       <h2 className="formular-titlu">Programare Nouă</h2>
-      
+
       <form onSubmit={onSubmit}>
         <div className="formular-grid">
           <div className="formular-grup">
@@ -263,7 +269,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               className="formular-input"
             />
           </div>
-          
+
           <div className="formular-grup">
             <label htmlFor="surname" className="formular-eticheta">
               Prenume
@@ -278,7 +284,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               className="formular-input"
             />
           </div>
-          
+
           <div className="formular-grup">
             <label htmlFor="phone" className="formular-eticheta">
               Număr de Telefon
@@ -293,7 +299,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               className="formular-input"
             />
           </div>
-          
+
           <div className="formular-grup">
             <label htmlFor="email" className="formular-eticheta">
               Numar de înmatriculare
@@ -308,7 +314,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               className="formular-input"
             />
           </div>
-          
+
           <div className="formular-grup">
             <label htmlFor="date" className="formular-eticheta">
               Data
@@ -323,7 +329,7 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
               className="formular-input"
             />
           </div>
-          
+
           <div className="formular-grup">
             <label htmlFor="service" className="formular-eticheta">
               Stație ITP
@@ -341,14 +347,14 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
             </select>
           </div>
         </div>
-        
+
         <div className="formular-buton-container">
           <button
             type="submit"
             disabled={loading}
             className="formular-buton-submit"
           >
-            {loading ? 'Se trimite...' : 'Trimite Programarea'}
+            {loading ? "Se trimite..." : "Trimite Programarea"}
           </button>
         </div>
       </form>
@@ -356,25 +362,30 @@ function FormularProgramare({ formData, handleInputChange, handleSubmit, loading
   );
 }
 
-// Data View Component
-function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, loading, refresh }) {
-  // Function to delete a booking
+function VizualizareProgramari({
+  submissions,
+  serviceFilter,
+  setServiceFilter,
+  loading,
+  refresh,
+}) {
   const handleDelete = async (id) => {
-    if (window.confirm('Sunteți sigur că doriți să ștergeți această programare?')) {
+    if (
+      window.confirm("Sunteți sigur că doriți să ștergeți această programare?")
+    ) {
       try {
-        const response = await fetch(`${API_URL}/bookings/${id}`, {
-          method: 'DELETE',
+        const response = await fetch(`${API_URL}/booking/${id}`, {
+          method: "DELETE",
         });
-        
+
         if (response.ok) {
-          // Refresh the list after deletion
           refresh();
         } else {
-          alert('Eroare la ștergerea programării');
+          alert("Eroare la ștergerea programării");
         }
       } catch (error) {
-        console.error('Eroare la ștergerea programării:', error);
-        alert('A apărut o eroare la ștergerea programării');
+        console.error("Eroare la ștergerea programării:", error);
+        alert("A apărut o eroare la ștergerea programării");
       }
     }
   };
@@ -383,15 +394,12 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
     <div className="vizualizare-container">
       <div className="vizualizare-header">
         <h2 className="vizualizare-titlu">Programări</h2>
-        
+
         <div className="vizualizare-actiuni">
-          <button 
-            onClick={refresh}
-            className="buton-reimprospatare"
-          >
+          <button onClick={refresh} className="buton-reimprospatare">
             Reîmprospătează
           </button>
-          
+
           <div className="filtru-container">
             <label htmlFor="filterService" className="filtru-eticheta">
               Filtrează după Stație ITP:
@@ -409,14 +417,13 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
           </div>
         </div>
       </div>
-      
+
       {loading ? (
-        <div className="mesaj-incarcare">
-          Se încarcă programările...
-        </div>
+        <div className="mesaj-incarcare">Se încarcă programările...</div>
       ) : submissions.length === 0 ? (
         <div className="mesaj-gol">
-          Nu s-au găsit programări. Adaugă una folosind formularul de programare.
+          Nu s-au găsit programări. Adaugă una folosind formularul de
+          programare.
         </div>
       ) : (
         <div className="tabel-container">
@@ -440,7 +447,10 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
                   <td className="tabel-celula">{submission.phone}</td>
                   <td className="tabel-celula">{submission.email}</td>
                   <td className="tabel-celula">{submission.date}</td>
-                  <td className="tabel-celula"> {/* nume statie programari */} {submission.service}</td>
+                  <td className="tabel-celula">
+                    {" "}
+                    {/* nume statie programari */} {submission.service}
+                  </td>
                   <td className="tabel-celula">
                     <button
                       onClick={() => handleDelete(submission.id)}
@@ -458,5 +468,3 @@ function VizualizareProgramari({ submissions, serviceFilter, setServiceFilter, l
     </div>
   );
 }
-
-

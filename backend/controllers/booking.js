@@ -1,9 +1,9 @@
 const { Booking } = require('../models');
 
-exports.getAllBookings = async (req, res) => {
+exports.getAllbooking = async (req, res) => {
   try {
-    const bookings = await Booking.findAll();
-    res.json(bookings);
+    const booking = await Booking.findAll();
+    res.json(booking);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
