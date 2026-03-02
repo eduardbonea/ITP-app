@@ -57,12 +57,12 @@ jobs:
 
             curl -f https://itp.eduardbonea.com || exit 1
 
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://itp.eduardbonea.com/api/user/login)
-            echo "Login Status: $STATUS"
-            
-            if [ "$STATUS" -eq 404 ] || [ "$STATUS" -ge 500 ]; then
-              echo "Error at login route (Status $STATUS)"
-              exit 1
-            fi
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Content-Type: application/json" -d '{"email":"test","password":"pass"}' https://itp.eduardbonea.com/api/user/login)
+
+            echo "Status: $STATUS"
+
+            [[ "$STATUS" -eq 404 || "$STATUS" -ge 500 ]] && { echo "ERR Login!"; exit 1; }
+
+            echo "Deploy OK!"
 
             echo "Deploy finished successfully!"
