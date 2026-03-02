@@ -18,11 +18,18 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Build frontend
+      - name: Localhost Check
         run: |
           cd frontend
-          npm ci
-          npm run build
+          if grep -q "localhost" src/MainApp.jsx; then
+            echo "ERR! localhost found in MainApp.jsx! Change it to PROD domain before pushing."
+            exit 1
+          elif grep -q "itp.eduardbonea.com" src/MainApp.jsx; then
+            echo "PROD domain found. Proceeding..."
+          else
+            echo "WARNING: Neither localhost or PROD domain found in MainApp.jsx. Check your config!"
+            exit 1
+          fi
 
       - name: Deploy to server
         uses: appleboy/ssh-action@v1.0.3
@@ -36,16 +43,6 @@ jobs:
             git fetch origin
             git reset --hard origin/release
 
-      - name: localhost check
-        run: |
-          cd frontend
-         
-          run: |
-          if grep -q "localhost" src\MainApp.jsx; then
-            echo "ERR! localhost found! Change it to PROD domain"
-            exit 1
-          fi
-          
             cd frontend
             npm ci
             npm run build
@@ -61,8 +58,10 @@ jobs:
             curl -f https://itp.eduardbonea.com || exit 1
 
             STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://itp.eduardbonea.com/api/login)
+            echo "Login Status: $STATUS"
+            
             if [ "$STATUS" -eq 404 ] || [ "$STATUS" -ge 500 ]; then
-              echo "Error at login (Status $STATUS)"
+              echo "Error at login route (Status $STATUS)"
               exit 1
             fi
 
