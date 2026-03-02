@@ -1,0 +1,53 @@
+name: Deploy on production
+
+on:
+  push:
+    branches:
+      - release 
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Build frontend
+        run: |
+          cd frontend
+          npm ci
+          npm run build
+
+      - name: Deploy to server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html/ITP-app
+
+            git fetch origin
+            git reset --hard origin/release
+
+            cd frontend
+            npm ci
+            npm run build
+
+            cd ../backend
+            npm ci
+            pm2 reload ITP-app
+
+            sudo systemctl reload nginx
+
+            sleep 5
+
+            curl -f https://itp.eduardbonea.com || exit 1
+
+            echo "Deploy finished successfully!"
