@@ -36,6 +36,16 @@ jobs:
             git fetch origin
             git reset --hard origin/release
 
+      - name: localhost check
+        run: |
+          cd frontend
+         
+          run: |
+          if grep -q "localhost" src\MainApp.jsx; then
+            echo "ERR! localhost found! Change it to PROD domain"
+            exit 1
+          fi
+          
             cd frontend
             npm ci
             npm run build
@@ -49,5 +59,11 @@ jobs:
             sleep 5
 
             curl -f https://itp.eduardbonea.com || exit 1
+
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://itp.eduardbonea.com/api/login)
+            if [ "$STATUS" -eq 404 ] || [ "$STATUS" -ge 500 ]; then
+              echo "Error at login (Status $STATUS)"
+              exit 1
+            fi
 
             echo "Deploy finished successfully!"

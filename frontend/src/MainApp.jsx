@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import "./App.css";
 
-export const API_URL = "http://localhost:3001/api";
+export const API_URL = "https://itp.eduardbonea.com/api";
 
 export default function MainApp() {
   const [view, setView] = useState("form");

@@ -8,7 +8,7 @@ const router = require('./routes');
 
 const port = process.env.PORT || 3001;
 
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'https://itp.eduardbonea.com' }));
 app.use(express.json());
 
 app.get('/', (req, res) => {
@@ -20,6 +20,10 @@ app.use('/api', router);
 app.get('/reset', async (req,res) => {
 	await db.sync({ force: true });
 	res.status(200).send('The database has been successfully reset ');
+});
+
+app.get('/health', (req, res) => {
+    res.status(200).json({ status: 'ok'});
 });
 
 app.listen(port, () => {
