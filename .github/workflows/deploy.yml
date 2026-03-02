@@ -27,7 +27,7 @@ jobs:
           elif grep -q "itp.eduardbonea.com" src/MainApp.jsx; then
             echo "PROD domain found. Proceeding..."
           else
-            echo "WARNING: Neither localhost or PROD domain found in MainApp.jsx. Check your config!"
+            echo "WARNING: Neither localhost or PROD domain found min MainApp.jsx. Check your config!"
             exit 1
           fi
 
@@ -57,7 +57,7 @@ jobs:
 
             curl -f https://itp.eduardbonea.com || exit 1
 
-            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://itp.eduardbonea.com/api/login)
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" -X POST https://itp.eduardbonea.com/api/user/login)
             echo "Login Status: $STATUS"
             
             if [ "$STATUS" -eq 404 ] || [ "$STATUS" -ge 500 ]; then
